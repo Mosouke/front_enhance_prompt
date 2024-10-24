@@ -25,7 +25,14 @@ export default function App() {
       console.error('Erreur:', error);
       alert('Une erreur est survenue lors de la soumission du prompt.');
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false); // Désactiver l'animation après la requête
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    // Vérifier si Ctrl + Enter est pressé
+    if (e.ctrlKey && e.key === 'Enter') {
+      handleSubmit();  // Soumettre si Ctrl + Enter est pressé
     }
   };
 
@@ -40,6 +47,7 @@ export default function App() {
           <textarea
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={handleKeyDown}  // Ajouter l'écoute de l'événement de touche
             name="prompt"
             id="prompt"
             className="w-full h-64 bg-slate-800/50 text-cyan-50 placeholder-cyan-300/50 rounded-xl p-4 border border-cyan-500/30 focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20 focus:outline-none transition-all duration-300 resize-none"
