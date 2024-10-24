@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 export default function App() {
   const [prompt, setPrompt] = useState("");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -20,12 +20,12 @@ export default function App() {
       }
 
       const data = await response.json();
-      
       setPrompt(data.enhancePrompt);
-      setIsLoading(false);
     } catch (error) {
       console.error('Erreur:', error);
       alert('Une erreur est survenue lors de la soumission du prompt.');
+    } finally {
+      setIsLoading(false); 
     }
   };
 
@@ -52,10 +52,36 @@ export default function App() {
           <button
             id="submit"
             onClick={handleSubmit}
-            className="px-8 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full text-white font-semibold hover:from-cyan-400 hover:to-purple-400 transform hover:scale-105 transition-all duration-300 shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/40"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-6 rounded-full shadow-lg flex items-center transition duration-300 transform hover:scale-105 active:scale-95"
             disabled={isLoading}
           >
-            Enhance
+            {isLoading ? (
+              <>
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="animate-spin h-5 w-5 mr-3 text-white"
+                >
+                  <circle
+                    strokeWidth="4"
+                    stroke="currentColor"
+                    r="10"
+                    cy="12"
+                    cx="12"
+                    className="opacity-25"
+                  ></circle>
+                  <path
+                    d="M4 12a8 8 0 018-8v8H4z"
+                    fill="currentColor"
+                    className="opacity-75"
+                  ></path>
+                </svg>
+                Loading...
+              </>
+            ) : (
+              "Enhance"
+            )}
           </button>
         </div>
       </div>
